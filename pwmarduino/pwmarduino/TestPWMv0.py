@@ -1,13 +1,13 @@
 #!/usr/bin/python
-# -*- coding: utf-8 -*-
+# -*- coding: latin-1 -*-
 
 """
-Contrôle de la luminosité d'une LED l'Arduino
-à partir d'un PC au moyen du protocole Firmata
+Contrï¿½le de la luminositï¿½ d'une LED l'Arduino
+ï¿½ partir d'un PC au moyen du protocole Firmata
 Interface graphique (Tkinter)
 """
 
-from Tkinter import *
+from tkinter import *
 import pyfirmata
 
 pin1 = 2
@@ -19,9 +19,9 @@ port = 'COM27'            #windows
 
 board = pyfirmata.Arduino(port)
 
-LEDpin = board.get_pin('d:3:p') #on règle la pin 11 en mode PWM
+LEDpin = board.get_pin('d:9:p') #on rï¿½gle la pin 11 en mode PWM
 
-# S'exécute lors d'un changement du slider:
+# S'exï¿½cute lors d'un changement du slider:
 def reglageLED(valeur):
     board.digital[LEDpin.pin_number].write(float(valeur)/100.0)
 
@@ -35,12 +35,12 @@ class Example(Frame):
         
     def initUI(self):
       
-        self.parent.title("LED") #titre de la fenêtre
+        self.parent.title("LED") #titre de la fenï¿½tre
 
         self.pack(fill=BOTH, expand=1)
      
-        # Label (le texte dans la fenêtre):
-        w = Label(self, wraplength = 200, pady = 10, text="Veuillez glisser le curseur pour contrôler la luminosité de la LED")
+        # Label (le texte dans la fenï¿½tre):
+        w = Label(self, wraplength = 200, pady = 10, text="Veuillez glisser le curseur pour contrï¿½ler la luminositï¿½ de la LED")
         w.pack()
 
         # Curseur:
@@ -52,7 +52,7 @@ class Example(Frame):
 def main():
   
     root = Tk()
-    root.geometry("250x200+300+300")  # dimension et position initiale de la fenêtre
+    root.geometry("250x200+300+300")  # dimension et position initiale de la fenï¿½tre
     app = Example(root)
     root.mainloop()  
 
