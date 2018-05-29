@@ -40,7 +40,7 @@ def conversion(l,F):  # convertit liste en csv
 
 print("valeurs initial du rapport cyclique de la pwn 7 max 17")
 while True:
-    T=0
+    T=[]
     val = int(input("lancer le programme avec un saut de rapport de (max :10) :  "))
     R=[]
     t=clock
