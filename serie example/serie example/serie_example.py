@@ -46,11 +46,5 @@ print(R3)
 T.pop()
 plot(T,R3)
 show()
-#def Adrienestmechant(Liste):
-#    l=len(Liste)
-#    differentiel=leplusgrandecart(Liste)    
-#def leplusgrandecart(Liste):
-#    a=0
-#    b=0
-    
+#
 
