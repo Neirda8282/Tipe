@@ -4,7 +4,7 @@ from numpy import mean
 from time import clock
 from pylab import plot, show
 
-ser = serial.Serial('com7', 115200, timeout=0)
+ser = serial.Serial('com9', 9600, timeout=0)
 
 
 def leplusfrequent(L):
