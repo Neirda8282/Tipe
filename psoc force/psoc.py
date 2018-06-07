@@ -2,7 +2,7 @@ import serial
 import csv
 from numpy import mean
 from time import clock
-from pylab import plot, show
+from pylab import plot, show, figure
 
 ser = serial.Serial('com9', 9600, timeout=0)
 
@@ -28,7 +28,7 @@ def acquisition(pas):
 
     while t < pas:
         i = 0
-        t1 = clock();
+        t1 = clock()
         b = ser.readline().decode('Latin-1')
 
         if b != '':
@@ -44,7 +44,7 @@ def acquisition(pas):
             except:
                 i += 1
 
-    # print(i)
+    print(i)
     # print(R1,len(R1))
     # print(R2,len(R2))
     # print(mean(R1), mean(R2))
@@ -86,6 +86,59 @@ def test():
               "valeur moyenne capteur 2 :", R[2], "; valeur la plus frequente du capteur 2 : ", R[3])
 
 
-test()  #test pour verifier la répétabilité de la mesure afin d'étalonner les capteurs
-#prog()  # prog pour faire une acquisition pendant un certain temps et voir l'evolution de la valeur
+# test()  #test pour verifier la répétabilité de la mesure afin d'étalonner les capteurs
+# prog()  # prog pour faire une acquisition pendant un certain temps et voir l'evolution de la valeur
 
+def conversion(l, F):  # convertit liste en csv
+
+    file = open(F, 'w', )
+
+    ecriture = csv.writer(file, dialect='excel', delimiter=';')
+    ecriture.writerow(['Masse', 'Volts'])
+    for i in range(len(l[0]) - 1):
+        ecriture.writerow([l[0][i], l[1][i]])
+    file.close()
+
+
+def etalonage():
+    M = [0]
+    Rm = []
+    Rf = []
+    R1 = []
+    R2 = []
+    ok = True
+    print("mesure initiale")
+    for i in range(1):
+        R = acquisition(0.01)
+        R1.append(R[2])
+        R2.append(R[3])
+    Rm.append(mean(R1))
+    Rf.append(mean(R2))
+    print("fin mesure valeur initial")
+    while ok:
+        m = float(input("masse ajouter (g): "))
+        if m != -1:
+            M.append(M[-1] + m)
+            for i in range(1):
+                R = acquisition(0.01)
+                R1.append(R[2])
+                R2.append(R[3])
+            Rm.append(mean(R1))
+            Rf.append(mean(R2))
+        else:
+            ok = False
+
+    F1 = 'Votlsmoyennecapteur2test2.csv'
+    conversion([M, Rm], F1)
+    F2 = 'VoltsFrequencecapteur2test2.csv'
+    conversion([M, Rf], F2)
+    figure(0)
+    plot(M, Rm)
+    show()
+    figure(1)
+    plot(M, Rf)
+    show()
+    return M, Rm, Rf
+
+
+etalonage()
