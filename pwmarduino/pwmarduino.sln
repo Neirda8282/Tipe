@@ -3,7 +3,7 @@ Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio 14
 VisualStudioVersion = 14.0.25420.1
 MinimumVisualStudioVersion = 10.0.40219.1
-Project("{888888A0-9F3D-457C-B088-3A5042F75D52}") = "lecteur port serie ok", "serie example\lecteur port serie ok.pyproj", "{1C5FF1E9-B9C4-4C0F-A616-39203E75A8E2}"
+Project("{888888A0-9F3D-457C-B088-3A5042F75D52}") = "pwmarduino", "pwmarduino\pwmarduino.pyproj", "{7FCE10E2-6FF1-4CFA-A368-8D0D22BDCE0E}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -11,13 +11,10 @@ Global
 		Release|Any CPU = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(ProjectConfigurationPlatforms) = postSolution
-		{1C5FF1E9-B9C4-4C0F-A616-39203E75A8E2}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{1C5FF1E9-B9C4-4C0F-A616-39203E75A8E2}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{7FCE10E2-6FF1-4CFA-A368-8D0D22BDCE0E}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{7FCE10E2-6FF1-4CFA-A368-8D0D22BDCE0E}.Release|Any CPU.ActiveCfg = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
-	EndGlobalSection
-	GlobalSection(ExtensibilityGlobals) = postSolution
-		SolutionGuid = {F21B660E-515B-4D30-BC2B-7910C743D281}
 	EndGlobalSection
 EndGlobal
