@@ -6,8 +6,13 @@ from Phidget22.PhidgetException import *
 from Phidget22.Phidget import *
 from Phidget22.Net import *
 
-# ph.setDataInterval(1000) # intervalle de temps entre les données
-# ph.setVoltageRatiochangeTrigger(0.0) # trigger de detectin seuil de detection   
+"""
+* Configures the device's DataInterval and ChangeTrigger.
+* Displays info about the attached phidget channel.
+* Fired when a Phidget channel with onAttachHandler registered attaches
+*
+* @param self The Phidget channel that fired the attach event
+"""
 def onAttachHandler(self):
     
     ph = self
@@ -284,55 +289,82 @@ def SetSensorHandler(pvih, fptr):
         raise
     
     return
-    print("\n--------------------------------------")
-    print("\nSetting OnAttachHandler...")
+    
+"""
+* Creates, configures, and opens a VoltageRatioInput channel.
+* Displays VoltageRatio events for 10 seconds
+* Closes out VoltageRatioInput channel
+*
+* @return 0 if the program exits successfully, 1 if it exits with errors.
+"""
+def main():
     try:
-        ph.setOnAttachHandler(onAttachHandler)
+        """
+        * Allocate a new Phidget Channel object
+        """
+        try:
+            ch = VoltageRatioInput()
+        except PhidgetException as e:
+            sys.stderr.write("Runtime Error -> Creating VoltageRatioInput: \n\t")
+            DisplayError(e)
+            raise
+        except RuntimeError as e:
+            sys.stderr.write("Runtime Error -> Creating VoltageRatioInput: \n\t" + e)
+            raise
+
+        """
+        * Set matching parameters to specify which channel to open
+        """
+        SetSerialNumber(ch)
+        
+        SetVINTProperties(ch)
+        
+        SetChannel(ch)
+        
+        SetupNetwork(ch)
+        
+        """
+        * Add event handlers before calling open so that no events are missed.
+        """
+        SetAttachDetachError_Handlers(ch)
+        
+        SetVoltageRatioHandler(ch, onVoltageRatioChangeHandler)
+        
+        SetSensorHandler(ch, onSensorChangeHandler)
+        
+        """
+
+        * Open the channel with a timeout
+        """
+        OpenPhidgetChannel_waitForAttach(ch, 5000)
+
+        
+        
+        print("Sampling data for 10 seconds...")
+
+        time.sleep(10)
+
+        """
+         * Perform clean up and exit
+         """
+
+        SetVoltageRatioHandler(ch, None)
+        
+        print("\nDone Sampling...")
+
+        print("Cleaning up...")
+        ClosePhidgetChannel(ch)
+        print("\nExiting...")
+        print("Press ENTER to end program.")
+        readin = sys.stdin.readline(1)
+        return 0
+
     except PhidgetException as e:
-        sys.stderr.write("Runtime Error -> Set Attach Handler: \n\t")
+        sys.stderr.write("\nExiting with error(s)...")
         DisplayError(e)
-        raise
+        print("Press ENTER to end program.")
+        readin = sys.stdin.readline(1)
+        return 1
 
-    print("Setting OnDetachHandler...")
-    try:
-        ph.setOnDetachHandler(onDetachHandler)
-    except PhidgetException as e:
-        sys.stderr.write("Runtime Error -> Set Detach Handler: \n\t")
-        DisplayError(e)
-        raise
+main()
 
-    print("Setting OnErrorHandler...")
-    try:
-        ph.setOnErrorHandler(onErrorHandler)
-    except PhidgetException as e:
-        sys.stderr.write("Runtime Error -> Set Error Handler: \n\t")
-        DisplayError(e)
-        raise
-
-    return
-
- 
- 
-ch=VoltageRatioInput()
-
- 
-ch.openWaitForAttachment(5000)
-# ch.setDeviceSerialNumber(-1)
-# ch.setChannel(2)
-# # ch.setDataInterval(1000)
-# # ch.setVoltageRatioChangeTrigger(0.0)
-
-
-# SetAttachDetachError_Handlers(ch)
-# SetVoltageRatioHandler(ch,onVoltageRatioChangeHandler)
-# SetSensorHandler(ch,onSensorChangeHandler)
-# OpenPhidgetChannel_waitForAttach(ch,5000)
-
-
-
-
-
-
-
-state=ch.getVoltageRatio()
-print(state)
