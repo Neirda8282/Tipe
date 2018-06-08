@@ -1,5 +1,6 @@
 from numpy import *
 from pylab import *
+import csv
 from mpl_toolkits.mplot3d import Axes3D
 
 
@@ -44,20 +45,30 @@ def Ch(x):
     return y
 
 
-X = linspace(0, 0.1, 1000)
-Yb = Cb(X)
-Yh = Ch(X)
-plot(X, Yb, X, Yh)
-#show()
+Xb = linspace(0, 0.101, 1000)
+Xh = Xb
+Yb = Cb(Xb)
+Yh = Ch(Xh)
+#plot(Xb, Yb, Xh, Yh)
+
+
+# show()
+# R=[]
+# for i in range(len(Yb)):
+#     R.append(abs(Yb[i]-Yh[i]))
+#
+# I=R.index(min(R))
+
+
 
 
 def angle(X, Yb, Yh, angle1, angle2, angle3):
-    d1=0.02
-    d2=0.06
+    d1 = 0.02
+    d2 = 0.06
     Zh = []
-    theta1=angle1*pi/180
-    theta2=angle2*pi/180
-    theta3=angle3*pi/180
+    theta1 = angle1 * pi / 180
+    theta2 = angle2 * pi / 180
+    theta3 = angle3 * pi / 180
     for i in range(len(X)):
         if X[i] < d1:
             Zh.append(tan(theta1) * (Yh[i] - Yb[i]))
@@ -67,22 +78,98 @@ def angle(X, Yb, Yh, angle1, angle2, angle3):
             Zh.append(tan(theta3) * (Yh[i] - Yb[i]))
     return Zh
 
-Zb=[0 for k in range(len(X))]
-Zh = angle(X, Yb, Yh, 13, 14, 15)
+#
+# [XB, YB] = meshgrid(Xb, Yb)
+# [XH, YH] = meshgrid(Xh, Yh)
+#
+Zb = [0 for k in range(len(Xb))]
+Zh = Zb
+
+#d=mean(Zh[:198])/198
+#for i in range(199):
+#    Zb[i]=d*(198-i)
+
+
+# n=100
+
+# D=Zh[I]
+# d=D/n
+# C=0
+# for i in range(I-n,len(Zb)):
+#     Zb[i]=d*C
+#     C+=1
+
+    
+def conversion(l, F):  # convertit liste en csv
+
+    file = open(F, 'w', )
+
+    ecriture = csv.writer(file, dialect='excel', delimiter=',')
+    #ecriture.writerow(['X', 'Y', 'Z'])
+    for i in range(len(l[0]) - 1):
+        ecriture.writerow([l[0][i], l[1][i], l[2][i]])
+    file.close()
+
+
+Lh = [Xh, Yh,Zh]
+conversion(Lh, 'pointhaut.txt')
+
+Lb = [Xb, Yb,Zb]
+conversion(Lb, 'pointbas.txt')
+
+X=concatenate((Xb,Xh))
+Y=concatenate((Yb,Yh))
+Z=concatenate((Zb,Zh))
+
+L=[X,Y,Z]
+conversion(L, 'point.txt')
 
 fig = figure()
 ax = fig.gca(projection='3d')
-ax.plot(X, Yh, Zh)
-ax.plot(X,Yb,[0 for k in range(len(X))])
+ax.plot(Xh, Yh, Zh)
+ax.plot(Xb,Yb,Zb)
 xlabel('x')
 ylabel('y')
 #show()
+#
+# Xh,Yh,Zh=meshgrid(X,Yh,Zh)
+#
+#
+# ax.plot(X,Yh,Zh)
+# ax.plot(X,Yb,Zb)
+# ax.set_xlabel('x')
+# ax.set_ylabel('y')
+# ax.set_zlabel('z')
+#
+# show()
 
-Xh,Yh,Zh=meshgrid(X,Yh,Zh)
+
+def S(x,y):
+
+    p00 = 0.002118
+    p10 = -0.1458
+    p01 = -0.01259
+    p20 = 5.277
+    p11 = 18.41
+    p30 = -71.22
+    p21 = -484.2
+    p40 = 431.1
+    p31 = 5328
+    p50 = -1135
+    p41 = -2.092e+04
+    S = p00 + p10 * x + p01 * y + p20 * (x ** 2) + p11 * x * y + p30 * (x ** 3) + p21 * (x ** 2) * y + p40 * (x ** 4) + p31 * (x ** 3) * y + p50 * (x ** 5) + p41 * (x ** 4) * y
+
+    return S
+
+X=linspace(0,0.102,1000)
+Y=linspace(-0.008,0.008,1000)
+Z=S(X,Y)
+
+X,Y=meshgrid(X,Y)
 
 
-ax.plot(X,Yh,Zh)
-#ax.plot(X,Yb,Zb)
+ax.plot(X,Y,Z)
+# ax.plot(X,Yb,Zb)
 ax.set_xlabel('x')
 ax.set_ylabel('y')
 ax.set_zlabel('z')
