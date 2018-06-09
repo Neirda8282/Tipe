@@ -3,6 +3,7 @@ from pylab import *
 from mpl_toolkits.mplot3d import Axes3D
 
 
+
 def conversion(l): # convertit liste en csv
 
     file=open("solidnaca.txt",'w',)
@@ -23,8 +24,8 @@ for ligne in fichier:
 #plot(x,y)
 #show()
 
-d=0.00829231
-h=d/len(y)
+# d=0.00829231
+# h=d/len(y)
 
 z=y.copy()
 y=x.copy()
@@ -35,13 +36,13 @@ ax = fig.gca(projection='3d')
 ax.plot(x, y, z)
 show()
 
-for i in range (len(z)):
-    z[i]=z[i]*10**-2
-
-for i in range(int(len(z)/2)):
-    y[i]=(len(y)-i)*h*10**-2
-for i in range(int(len(z)/2)+1,len(z)):
-    y[i]=i*h*10**-2
+# for i in range (len(z)):
+#     z[i]=z[i]*10**-2
+#
+# for i in range(int(len(z)/2)):
+#     y[i]=(len(y)-i)*h*10**-2
+# for i in range(int(len(z)/2)+1,len(z)):
+#     y[i]=i*h*10**-2
     
 
 fig = figure()
