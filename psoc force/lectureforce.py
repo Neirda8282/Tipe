@@ -6,6 +6,7 @@ from pylab import plot, show, figure
 
 ser = serial.Serial('com9', 9600, timeout=0)
 
+
 def conversion(l, F):  # convertit liste en csv
 
     file = open(F, 'w', )
@@ -15,7 +16,6 @@ def conversion(l, F):  # convertit liste en csv
     for i in range(len(l[0]) - 1):
         ecriture.writerow([l[0][i], l[1][i]])
     file.close()
-
 
 
 def acquisition(pas):
@@ -55,7 +55,7 @@ def prog():
         pas = float(input("pas de mesure : "))
         t = 0
         T = []
-        R1m, R1L, R2m, R2L = [], [], [], []
+        R1m, R2m = [], []
         while t < Tmax:
             t1 = clock()
             R = acquisition(pas)
@@ -63,10 +63,10 @@ def prog():
             t = t + t2 - t1
             T.append(t)
             R1m.append(R[0])
-            R1L.append(R[1])
-            R2m.append(R[2])
-            R2L.append(R[3])
-        plot(T, R1m, ':r', T, R1L, '*r', T, R2m, ':g', T, R2L, '*g')
+
+            R2m.append(R[1])
+
+        plot(T, R1m, ':r', T, R2m, ':g')
         show()
 
 
