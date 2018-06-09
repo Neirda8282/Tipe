@@ -1,6 +1,6 @@
 import serial
 import csv
-from numpy import mean
+from numpy import mean, exp
 from time import clock
 from pylab import plot, show, figure
 
@@ -52,7 +52,7 @@ def acquisition(pas):
 def prog():
     while True:
         Tmax = int(input("durée acquisition : "))
-        pas = float(input("pas de mesure : "))
+        pas = 0.01
         t = 0
         T = []
         R1m, R2m = [], []
@@ -70,4 +70,26 @@ def prog():
         show()
 
 
-prog()
+def capteur1(v):
+    f = 0.00993 * exp(0.02513 * v)
+    return f
+
+
+def capteur2(v):
+    f = 0.04857 * exp(0.01578 * v)
+    return f
+
+
+def force():
+    while True:
+        try:
+            valeur = acquisition(0.01)
+            f1, f2 = capteur1(valeur[0]), capteur2(valeur[1])
+            print("force capteur 1 : ", f1)
+            print("force capteur 2 : ", f2)
+        except KeyboardInterrupt:
+            print("fin programme")
+
+
+# prog()
+force()
