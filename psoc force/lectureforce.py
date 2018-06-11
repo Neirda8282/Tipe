@@ -1,7 +1,7 @@
 import serial
 import csv
 from numpy import mean, exp
-from time import clock
+from time import clock,sleep
 from pylab import plot, show, figure
 
 ser = serial.Serial('com9', 9600, timeout=0)
@@ -90,6 +90,8 @@ def force():
         except KeyboardInterrupt:
             print("fin programme")
 
-
-# prog()
-force()
+#prog()
+#force()
+while True :
+    print(acquisition(0.01))
+    sleep(1)

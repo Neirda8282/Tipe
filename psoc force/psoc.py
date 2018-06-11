@@ -128,9 +128,9 @@ def etalonage():
         else:
             ok = False
 
-    F1 = 'Votlsmoyennecapteur2test2.csv'
+    F1 = 'V.csv'
     conversion([M, Rm], F1)
-    F2 = 'VoltsFrequencecapteur2test2.csv'
+    F2 = 'Vol.csv'
     conversion([M, Rf], F2)
     figure(0)
     plot(M, Rm)

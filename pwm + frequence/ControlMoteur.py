@@ -4,8 +4,8 @@ from time import clock
 from pylab import plot,show
 
 
-ser1 = serial.Serial('com15',115200,timeout=0) # port com de la due
-ser2 = serial.Serial('com3',9600,timeout=0) # port com de la uno
+#ser1 = serial.Serial('com15',115200,timeout=0) # port com de la due
+ser2 = serial.Serial('com10',9600,timeout=0) # port com de la uno
 
 ser2.write(str(7).encode('Latin-1'))
 
